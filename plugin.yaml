@@ -1,5 +1,5 @@
 name: "cascade"
-version: "0.0.1"
+version: "0.0.2"
 usage: "Recursively manages Helm chart dependencies across all subcharts"
 description: "Recursively manages Helm chart dependencies across all subcharts"
 ignoreFlags: false
