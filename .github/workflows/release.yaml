@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: 
+        with:
           fetch-depth: 0 # Needed for release notes
       - uses: actions/setup-go@v4
         with:

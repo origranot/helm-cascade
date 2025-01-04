@@ -11,13 +11,6 @@ import (
 	"github.com/fatih/color"
 )
 
-type ChartInfo struct {
-	Name         string
-	Path         string
-	Dependencies string
-	Level        int
-}
-
 func ListSubchartDependencies(rootDir string) error {
 	var charts []ChartInfo
 	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
@@ -75,13 +68,54 @@ func getDependencies(path string) (string, string, error) {
 	cmd.Stderr = &stderr
 
 	err := cmd.Run()
-	if err != nil {
+	if err != nil || stderr.String() != "" {
 		return "", stderr.String(), err
 	}
 
 	lines := strings.Split(stdout.String(), "\n")
+	formattedDeps := make([]string, 0, len(lines)-1)
+
 	if len(lines) > 1 {
-		return strings.Join(lines[1:], "\n"), stderr.String(), nil
+		for _, line := range lines[1:] {
+			formattedDeps = append(formattedDeps, formatDependency(line))
+		}
+
+		return strings.Join(formattedDeps, "\n"), "", nil
 	}
 	return "", stderr.String(), nil
+}
+
+func formatDependency(dep string) string {
+	if strings.HasPrefix(dep, "WARNING:") {
+		return color.YellowString(dep)
+	}
+
+	parts := strings.Split(dep, "\t")
+	if len(parts) < 4 {
+		return dep
+	}
+
+	name := strings.TrimSpace(parts[0])
+	version := strings.TrimSpace(parts[1])
+	repo := strings.TrimSpace(parts[2])
+	status := strings.TrimSpace(parts[3])
+
+	switch strings.ToLower(status) {
+	case "ok", "unpacked":
+		status = color.GreenString(status)
+	case "missing":
+		status = color.RedString(status)
+	default:
+		status = color.YellowString(status)
+	}
+
+	namePad := 25
+	versionPad := 8
+	repoPad := 52
+
+	return fmt.Sprintf("%-*s %-*s %-*s %s",
+		namePad, name,
+		versionPad, version,
+		repoPad, repo,
+		status)
 }
