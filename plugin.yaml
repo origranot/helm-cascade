@@ -1,0 +1,9 @@
+name: "cascade"
+version: "0.0.1"
+usage: "Recursively manages Helm chart dependencies across all subcharts"
+description: "Recursively manages Helm chart dependencies across all subcharts"
+ignoreFlags: false
+command: "$HELM_PLUGIN_DIR/bin/cascade"
+hooks:
+  install: "cd $HELM_PLUGIN_DIR; scripts/install-binary.sh"
+  update: "cd $HELM_PLUGIN_DIR; scripts/install-binary.sh"

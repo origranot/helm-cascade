@@ -1,0 +1,12 @@
+{
+  "configurations": [
+    {
+      "name": "Launch file",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "program": "${workspaceFolder}/main.go",
+      "args": [] // Add any arguments here
+    }
+  ]
+}

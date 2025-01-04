@@ -1,0 +1,74 @@
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    ignore:
+      - goos: windows
+        goarch: arm64
+    binary: cascade
+    ldflags:
+      - -s -w
+      - -X main.version={{.Version}}
+      - -X main.commit={{.Commit}}
+      - -X main.date={{.Date}}
+
+archives:
+  - format: tar.gz
+    name_template: "{{ .ProjectName }}-{{ tolower .Os }}-{{ .Arch }}"
+    files:
+      - plugin.yaml
+      - scripts/*
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: Features
+      regexp: "^feat[(\\w)]*!?:.+$"
+      order: 0
+    - title: Bug Fixes
+      regexp: "^fix[(\\w)]*!?:.+$"
+      order: 1
+    - title: Others
+      order: 999
+
+release:
+  github:
+    owner: origranot
+    name: helm-cascade
+  draft: false
+  prerelease: auto
+  mode: replace
+  header: |
+    ## Helm Cascade Plugin ({{ .Tag }})
+  footer: |
+    **Full Changelog**: https://github.com/origranot/helm-cascade/compare/{{ .PreviousTag }}...{{ .Tag }}
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+project_name: helm-cascade

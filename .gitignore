@@ -1,0 +1,6 @@
+/tmp
+/bin
+/releases
+*.log
+.DS_Store
+*.swp
