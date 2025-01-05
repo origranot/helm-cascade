@@ -9,7 +9,7 @@ I needed a way to manage dependencies across multiple subcharts in a large Helm 
 ## Installation
 
 ```bash
-helm plugin install https://github.com/origranot/helm-cascade.git
+helm plugin install https://github.com/origranot/helm-cascade
 ```
 
 ## Usage
