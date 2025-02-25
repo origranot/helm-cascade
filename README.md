@@ -41,3 +41,9 @@ helm cascade build <chart-dir>
 ```bash
 helm cascade update <chart-dir> # or helm cascade up
 ```
+
+### Lint
+
+```bash
+helm cascade lint <chart-dir>
+```
