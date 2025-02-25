@@ -21,7 +21,12 @@ func createDependencyCommand(name, desc string) *cobra.Command {
 				cmd.PrintErrln(err)
 				return
 			}
-			err = helmutil.ManageDependencies(absPath, helmutil.Command(name))
+			if name == "lint" {
+				err = helmutil.LintCharts(absPath)
+			} else {
+				err = helmutil.ManageDependencies(absPath, helmutil.DependencyCommand(name))
+			}
+
 			if err != nil {
 				cmd.PrintErrln(err)
 			}
