@@ -26,7 +26,7 @@ func walkAndFindCharts(rootDir string, charts *[]Chart) error {
 			return err
 		}
 
-		chartPath := filepath.Join(path, CHART_FILE_NAME)
+		chartPath := filepath.Join(path, ChartFileName)
 		chartMetadata, err := chartutil.LoadChartfile(chartPath)
 		if err != nil {
 			return nil
