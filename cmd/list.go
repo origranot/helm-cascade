@@ -12,7 +12,7 @@ var listCmd = &cobra.Command{
 	DisableFlagsInUseLine: true,
 	Args:                  cobra.ExactArgs(1),
 	ValidArgs:             []string{"chart"},
-	RunE: func(cmd *cobra.Command, args []string) error {
+	RunE: func(_ *cobra.Command, args []string) error {
 		return helmutil.ListSubchartDependencies(args[0])
 	},
 }

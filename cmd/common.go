@@ -13,7 +13,7 @@ func createDependencyCommand(name, desc string) *cobra.Command {
 		Example:               "helm cascade " + name + " .",
 		Args:                  cobra.ExactArgs(1),
 		ValidArgs:             []string{"chart"},
-		RunE: func(cmd *cobra.Command, args []string) error {
+		RunE: func(_ *cobra.Command, args []string) error {
 			chartPath := args[0]
 			if name == "lint" {
 				return helmutil.ProcessCharts(chartPath, helmutil.OperationLint, "")

@@ -7,9 +7,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "cascade [command] CHART",
-	Short: "A tool to manage Helm dependencies recursively",
-	Long:  `This is a tool to manage Helm dependencies recursively.`,
+	Use:           "cascade [command] CHART",
+	Short:         "A tool to manage Helm dependencies recursively",
+	Long:          `This is a tool to manage Helm dependencies recursively.`,
 	SilenceErrors: true, // https://github.com/spf13/cobra/issues/340
 	SilenceUsage:  true, // https://github.com/spf13/cobra/issues/340
 }
