@@ -17,9 +17,8 @@ func createDependencyCommand(name, desc string) *cobra.Command {
 			chartPath := args[0]
 			if name == "lint" {
 				return helmutil.ProcessCharts(chartPath, helmutil.OperationLint, "")
-			} else {
-				return helmutil.ProcessCharts(chartPath, helmutil.OperationDependency, helmutil.DependencyCommand(name))
 			}
+			return helmutil.ProcessCharts(chartPath, helmutil.OperationDependency, helmutil.DependencyCommand(name))
 		},
 	}
 }
