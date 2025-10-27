@@ -38,7 +38,7 @@ func ProcessCharts(rootDir string, operation ChartOperation, cmd DependencyComma
 		case OperationLint:
 			helmCmd = exec.Command("helm", "lint", chart.path, "--values", path.Join(rootDir, "values.yaml"))
 		default:
-			errorMsg := fmt.Sprintf("unsupported operation: %s", operation)
+			errorMsg := fmt.Sprintf("Error: unsupported operation: %s", operation)
 			return fmt.Errorf("%s", ErrorColor.Sprint(errorMsg))
 		}
 
@@ -49,10 +49,10 @@ func ProcessCharts(rootDir string, operation ChartOperation, cmd DependencyComma
 		if err := helmCmd.Run(); err != nil {
 			switch operation {
 			case OperationDependency:
-				errorMsg := fmt.Sprintf("failed to %s dependencies for %s:\n%s", cmd, chart.path, stderr.String())
+				errorMsg := fmt.Sprintf("Error: failed to %s dependencies for %s:\n%s", cmd, chart.path, stderr.String())
 				return fmt.Errorf("%s", ErrorColor.Sprint(errorMsg))
 			case OperationLint:
-				errorMsg := fmt.Sprintf("failed to lint chart %s:\n%s", chart.path, stderr.String())
+				errorMsg := fmt.Sprintf("Error: failed to lint chart %s:\n%s", chart.path, stderr.String())
 				return fmt.Errorf("%s", ErrorColor.Sprint(errorMsg))
 			}
 		}
