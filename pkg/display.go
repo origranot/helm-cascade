@@ -81,7 +81,8 @@ func ListSubchartDependencies(rootDir string) error {
 	var charts []Chart
 	err := walkAndFindCharts(rootDir, &charts)
 	if err != nil {
-		return err
+		errorMsg := fmt.Sprintf("Error: %s", err.Error())
+		return fmt.Errorf("%s", ErrorColor.Sprint(errorMsg))
 	}
 
 	if len(charts) == 0 {
